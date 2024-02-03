@@ -46,6 +46,11 @@ export async function chat(
         prompts = [head, ...prompts]
     }
 
+    let authorization = ''
+    if (apiKey) {
+        authorization = `Bearer ${apiKey}`
+    } 
+
     // fetch has been canceled
     let hasCancel = false
     // abort signal for fetch
@@ -61,7 +66,7 @@ export async function chat(
         const response = await fetch(`${host}/v1/chat/completions`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${apiKey}`,
+                Authorization: authorization,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
